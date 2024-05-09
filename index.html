@@ -156,12 +156,14 @@
 		  frameHeight: 77
 		});
 
-		this.load.image('obsticle-1', 'assets/cactuses_small_1.png');
-		this.load.image('obsticle-2', 'assets/cactuses_small_2.png');
-		this.load.image('obsticle-3', 'assets/cactuses_small_3.png');
-		this.load.image('obsticle-4', 'assets/cactuses_big_1.png');
-		this.load.image('obsticle-5', 'assets/cactuses_big_2.png');
-		this.load.image('obsticle-6', 'assets/cactuses_big_3.png');
+		this.load.spritesheet('fly-pigeon', 'assets/obstacle-0.png', {
+		  frameWidth: 114,
+		  frameHeight: 165
+		});
+
+		this.load.image('obstacle-1', 'assets/obstacle-1.png');
+		this.load.image('obstacle-2', 'assets/obstacle-2.png');
+		this.load.image('obstacle-3', 'assets/obstacle-3.png');
 	  }
 
 	  create() {
@@ -427,6 +429,13 @@
 		  //repeat: -1
 		  hideOnComplete: true
 		});
+
+		this.anims.create({
+		  key: 'obstacle-0',
+		  frames: this.anims.generateFrameNumbers('fly-pigeon', {start: 0, end: 2}),
+		  frameRate: 12,
+		  repeat: -1
+		});
 	  }
 
 	  handleScore() {
@@ -567,8 +576,8 @@
 		});
 	  }
 
-	  placeObsticle() {
-		const obsticleNum = Math.floor(Math.random() * 7) + 1;
+	  placeObstacle() {
+		/*const obsticleNum = Math.floor(Math.random() * 7) + 1;
 		const distance = Phaser.Math.Between(600, 900);
 
 		let obsticle;
@@ -581,9 +590,25 @@
 		} else {
 		  obsticle = this.obsticles.create(this.game.config.width + distance, this.game.config.height - 250, `obsticle-${obsticleNum}`)
 			.setOrigin(0, .5);
+		}*/
+
+		const obstacleNum = Math.floor(Math.random() * 4);
+		const distance = Phaser.Math.Between(600, 900);
+		let obstacle;
+
+		if(obstacleNum === 0){
+			obstacle = this.obsticles.create(this.game.config.width + distance, this.game.config.height - 250 - 50, `fly-pigeon`)
+				.setOrigin(0, .5);
+
+			obstacle.play('obstacle-0', 1);
+			obstacle.body.height = obstacle.body.height / 2.5;
+		}
+		else{
+			obstacle = this.obsticles.create(this.game.config.width + distance, this.game.config.height - 250, `obstacle-${obstacleNum}`)
+				.setOrigin(0, .5);
 		}
 
-		obsticle.setImmovable();
+		obstacle.setImmovable();
 	  }
 
 	  placeDonut() {
@@ -609,7 +634,7 @@
 			this.placeDonut();
 		}
 		if (this.respawnTime >= 1500) {
-		  this.placeObsticle();
+		  this.placeObstacle();
 		  this.respawnTime = 0;
 
 		  this.placeDonut();
