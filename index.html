@@ -113,7 +113,10 @@
 		this.load.image('restart', 'assets/restart.png');
 		this.load.image('game-over', 'assets/game-over.png');
 		this.load.image('cloud', 'assets/cloud.png');
-		this.load.image('rupin', 'assets/rupin.png');
+		this.load.image('sun', 'assets/sun.png');
+		this.load.image('sunset', 'assets/sunset.png');
+		this.load.image('moon', 'assets/moon.png');
+		this.load.image('star', 'assets/star.png');
 		this.load.image('shadow', 'assets/shadow.png');
 
 		/*this.load.spritesheet('donut', 'assets/coin.png', {
@@ -125,11 +128,6 @@
 		  frameWidth: 24,
 		  frameHeight: 77
 		});*/
-
-		this.load.spritesheet('moon', 'assets/moon.png', {
-		  frameWidth: 20,
-		  frameHeight: 40
-		});
 
 		/*this.load.spritesheet('dino', 'assets/dino-run.png', {
 		  frameWidth: 88,
@@ -235,10 +233,19 @@
 	  initEnvironment(type = 0){
 		const { height, width } = this.game.config;
 
+		document.querySelector("body").style.background = "#a5dde2";
+
+		this.sun = this.add.image(500, 350, 'sun');
+		this.sunset = this.add.image((width - 840), height - 250, 'sunset');
+		this.moon = this.add.image(1200, 60, 'moon');
+		this.star = this.add.image(1000, 0, 'star');
+
+		this.sunset.setAlpha(0);
+		this.moon.setAlpha(0);
+		this.star.setAlpha(0);
+
 		this.ground = this.add.tileSprite(0, height - 250, 250, 0, `ground-${type}`).setOrigin(0, 0);
 		this.platform = this.physics.add.existing(this.ground, true);
-
-		document.querySelector("body").style.background = "#a5dde2";
 
 		this.environment = this.add.group();
 		this.environment.addMultiple([
@@ -278,18 +285,36 @@
 					this.scoreText.setColor("#000000");
 					this.scoreLabel.setColor("#000000");
 					this.donutScoreText.setColor("#000000");
+
+					this.sun.setAlpha(1);
+					this.sunset.setAlpha(0);
+					this.moon.setAlpha(0);
+					this.star.setAlpha(0);
+
 					break;
 				case 1:
 					document.querySelector("body").style.background = "#e1895e";
 					this.scoreText.setColor("#000000");
 					this.scoreLabel.setColor("#000000");
 					this.donutScoreText.setColor("#000000");
+
+					this.sun.setAlpha(0);
+					this.sunset.setAlpha(1);
+					this.moon.setAlpha(0);
+					this.star.setAlpha(0);
+
 					break;
 				case 2:
 					document.querySelector("body").style.background = "#110c22";
 					this.scoreText.setColor("#c5c5c5");
 					this.scoreLabel.setColor("#c5c5c5");
 					this.donutScoreText.setColor("#c5c5c5");
+
+					this.sun.setAlpha(0);
+					this.sunset.setAlpha(0);
+					this.moon.setAlpha(1);
+					this.star.setAlpha(1);
+
 					break;
 			}
 
@@ -371,6 +396,8 @@
 				this.scoreText.setAlpha(1);
 				this.environment.setAlpha(1);
 				startEvent.remove();
+
+				//this.scale.startFullscreen();
 			  }
 			}
 		  });
@@ -597,7 +624,7 @@
 		let obstacle;
 
 		if(obstacleNum === 0){
-			obstacle = this.obsticles.create(this.game.config.width + distance, this.game.config.height - 250 - 50, `fly-pigeon`)
+			obstacle = this.obsticles.create(this.game.config.width + distance, 360, `fly-pigeon`)
 				.setOrigin(0, .5);
 
 			obstacle.play('obstacle-0', 1);
