@@ -236,9 +236,9 @@
 
 		document.querySelector("body").style.background = "#a5dde2";
 
-		this.sun = this.add.image(1390, -360, 'sun').setOrigin(0, 0);
-		this.sunset = this.add.image(650, 30, 'sunset').setOrigin(0, 0);
-		this.moon = this.add.image(1000, 141, 'moon').setOrigin(0, 0);
+		this.sun = this.add.image(700, -360, 'sun').setOrigin(0, 0);
+		this.sunset = this.add.image(700, 30, 'sunset').setOrigin(0, 0);
+		this.moon = this.add.image(700, 141, 'moon').setOrigin(0, 0);
 		this.star = this.add.image(0, 0, 'star').setOrigin(0, 0);
 		this.memo = this.add.image(0, 363, 'memo').setOrigin(0, 0);
 
@@ -294,7 +294,7 @@
 					this.moon.setAlpha(0);
 					this.star.setAlpha(0);
 					
-					this.moon.x = 1000;
+					this.moon.x = 700;
 					this.moon.y = 141;
 
 					break;
@@ -310,7 +310,7 @@
 					this.moon.setAlpha(0);
 					this.star.setAlpha(0);
 
-					this.sun.x = 1390;
+					this.sun.x = 700;
 					this.sun.y = -360;
 					this.memo.x = 0;
 					this.memo.y = 363;
@@ -328,7 +328,7 @@
 					this.moon.setAlpha(1);
 					this.star.setAlpha(1);
 
-					this.sunset.x = 650;
+					this.sunset.x = 700;
 					this.sunset.y = 30;
 
 					break;
@@ -669,16 +669,14 @@
 		Phaser.Actions.IncX(this.donuts.getChildren(), -this.gameSpeed);
 		Phaser.Actions.IncX(this.environment.getChildren(), -0.5);
 		if(this.type === 0){
-			Phaser.Actions.IncX([this.sun], -6.4);
-			Phaser.Actions.IncY([this.sun], 3.4);
+			Phaser.Actions.IncY([this.sun], 1);
 			Phaser.Actions.IncX([this.memo], -1);
 		}
 		else if(this.type === 1){
-			Phaser.Actions.IncX([this.sunset], -6.4);
-			Phaser.Actions.IncY([this.sunset], 3.4);
+			Phaser.Actions.IncY([this.sunset], 1);
 		}
 		else if(this.type === 2){
-			Phaser.Actions.IncX([this.moon], -.2);
+			Phaser.Actions.IncY([this.moon], 1);
 		}
 
 		this.respawnTime += delta * this.gameSpeed * 0.08;
