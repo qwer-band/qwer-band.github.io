@@ -91,7 +91,7 @@
 	  preload() {
 		this.load.audio('jump', 'assets/jump.mp3');
 		this.load.audio('hit', 'assets/hit.m4a');
-		this.load.audio('reach', 'assets/reach.m4a');
+		this.load.audio('reach', 'assets/reach.mp3');
 		this.load.audio('run', 'assets/run.mp3');
 
 		this.load.image('ground-0', 'assets/ground-0.png');
@@ -259,7 +259,7 @@
 
 		this.sun = this.add.image(700, -360, 'sun').setOrigin(0, 0);
 		this.sunset = this.add.image(700, 30, 'sunset').setOrigin(0, 0);
-		this.moon = this.add.image(700, -360, 'moon').setOrigin(0, 0);
+		this.moon = this.add.image(700, -160, 'moon').setOrigin(0, 0);
 		this.star = this.add.image(0, 0, 'star').setOrigin(0, 0);
 		this.memo = this.add.image(0, 0, 'memo').setOrigin(0, 0);
 		this.wheel = this.add.image(0, 0, 'wheel').setOrigin(0, 0);
@@ -412,7 +412,7 @@
 			//donut increase
 			this.donut = this.donut + type;
 
-			//this.reachSound.play();			
+			this.reachSound.play();			
 		}, null, this);
 	  }
 
@@ -435,7 +435,6 @@
 			  this.dino.setVelocityX(80);
 			  this.shadow.setVelocityX(80);
 			  this.dino.play('dino-run', 1);
-			  this.runSound.play();
 
 			  if (this.ground.width < width) {
 				this.ground.width += 17 * 2;
@@ -773,8 +772,8 @@
 			}
 		}
 
-		if(Math.floor(((new Date()) - this.startTime) / 10000) < 3){
-			this.passTime(Math.floor(((new Date()) - this.startTime) / 10000));
+		if(Math.floor(((new Date()) - this.startTime) / 15000) < 3){
+			this.passTime(Math.floor(((new Date()) - this.startTime) / 15000));
 		}
 	  }
 	}
