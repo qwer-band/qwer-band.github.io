@@ -89,7 +89,7 @@
 	  }
 
 	  preload() {
-		this.load.audio('jump', 'assets/jump.m4a');
+		this.load.audio('jump', 'assets/jump.mp3');
 		this.load.audio('hit', 'assets/hit.m4a');
 		this.load.audio('reach', 'assets/reach.m4a');
 		this.load.audio('run', 'assets/run.mp3');
@@ -590,7 +590,7 @@
 		  if(this.isGameRunning){
 			if (!this.dino.body.onFloor() || this.dino.body.velocity.x > 0) { return; }
 
-			//this.jumpSound.play();
+			this.jumpSound.play();
 			this.dino.play('siyeon-jump', 1);
 			this.dino.body.height = this.CHARACTER_HEIGHT;
 			//this.dino.body.offset.y = this.groundPositionY;
@@ -625,7 +625,7 @@
 		  if(this.isGameRunning){
 			if (!this.dino.body.onFloor() || this.dino.body.velocity.x > 0) { return; }
 
-			//this.jumpSound.play();
+			this.jumpSound.play();
 			this.dino.play('siyeon-jump', 1);
 			this.dino.body.height = this.CHARACTER_HEIGHT;
 			//this.dino.body.offset.y = this.groundPositionY;
