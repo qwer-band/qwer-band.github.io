@@ -237,6 +237,7 @@
 		//this.restart = this.add.image(0, 80, 'restart').setInteractive();
 		this.gameOverText = this.add.text(width / 2, height / 2, "00000", {fill: "#000000", font: '900 60px CWDangamAsac-Bold', resolution: 5})
 		  .setOrigin(0.5, 0.5)
+		  .setStroke('#c5c5c5', 5)
 		  .setText('G A M E  O V E R');
 		this.gameOverScreen.add([
 			this.gameOverText
@@ -435,6 +436,8 @@
 			  this.dino.setVelocityX(80);
 			  this.shadow.setVelocityX(80);
 			  this.dino.play('dino-run', 1);
+
+			  //this.scale.startFullscreen();
 
 			  if (this.ground.width < width) {
 				this.ground.width += 17 * 2;
