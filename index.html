@@ -118,6 +118,8 @@
 		this.load.image('moon', 'assets/moon.png');
 		this.load.image('star', 'assets/star.png');
 		this.load.image('memo', 'assets/memo.png');
+		this.load.image('wheel', 'assets/wheel.png');
+		this.load.image('start', 'assets/start.png');
 		this.load.image('shadow', 'assets/shadow.png');
 
 		/*this.load.spritesheet('donut', 'assets/coin.png', {
@@ -238,22 +240,24 @@
 
 		this.sun = this.add.image(700, -360, 'sun').setOrigin(0, 0);
 		this.sunset = this.add.image(700, 30, 'sunset').setOrigin(0, 0);
-		this.moon = this.add.image(700, 141, 'moon').setOrigin(0, 0);
+		this.moon = this.add.image(700, -360, 'moon').setOrigin(0, 0);
 		this.star = this.add.image(0, 0, 'star').setOrigin(0, 0);
-		this.memo = this.add.image(0, 363, 'memo').setOrigin(0, 0);
+		this.memo = this.add.image(0, 0, 'memo').setOrigin(0, 0);
+		this.wheel = this.add.image(0, 0, 'wheel').setOrigin(0, 0);
 
 		this.sunset.setAlpha(0);
 		this.moon.setAlpha(0);
 		this.star.setAlpha(0);
+		this.wheel.setAlpha(0);
 
 		this.ground = this.add.tileSprite(0, height - 250, 250, 0, `ground-${type}`).setOrigin(0, 0);
 		this.platform = this.physics.add.existing(this.ground, true);
 
 		this.environment = this.add.group();
 		this.environment.addMultiple([
-			this.add.image(280, 185, `cloud-${type}-${Math.floor(Math.random() * 4)}`),
-			this.add.image(width / 1.8, 185, `cloud-${type}-${Math.floor(Math.random() * 4)}`),
-			this.add.image((width / 1.1), 185, `cloud-${type}-${Math.floor(Math.random() * 4)}`),
+			this.add.image(280, this.cloudHeight(320), `cloud-${type}-${Math.floor(Math.random() * 4)}`),
+			this.add.image(width / 1.8, this.cloudHeight(320), `cloud-${type}-${Math.floor(Math.random() * 4)}`),
+			this.add.image((width / 1.1), this.cloudHeight(320), `cloud-${type}-${Math.floor(Math.random() * 4)}`),
 		]);
 		this.environment.setAlpha(0);
 
@@ -277,6 +281,10 @@
 		this.donutScoreImg.setScale(.6)
 	  }
 
+	  cloudHeight(height){
+		return height + ((1 * (Math.floor(Math.random() * 2)) * -2 + 1) * 50);
+	  }
+
 	  passTime(type){
 		if(this.type !== type){
 			this.type = type;
@@ -293,6 +301,7 @@
 					this.sunset.setAlpha(0);
 					this.moon.setAlpha(0);
 					this.star.setAlpha(0);
+					this.wheel.setAlpha(0);
 					
 					this.moon.x = 700;
 					this.moon.y = 141;
@@ -309,11 +318,12 @@
 					this.sunset.setAlpha(1);
 					this.moon.setAlpha(0);
 					this.star.setAlpha(0);
+					this.wheel.setAlpha(1);
 
 					this.sun.x = 700;
 					this.sun.y = -360;
 					this.memo.x = 0;
-					this.memo.y = 363;
+					this.memo.y = 0;
 
 					break;
 				case 2:
@@ -327,9 +337,12 @@
 					this.sunset.setAlpha(0);
 					this.moon.setAlpha(1);
 					this.star.setAlpha(1);
+					this.wheel.setAlpha(0);
 
 					this.sunset.x = 700;
 					this.sunset.y = 30;
+					this.memo.x = 0;
+					this.memo.y = 0;
 
 					break;
 			}
@@ -667,13 +680,14 @@
 		this.ground.tilePositionX += this.gameSpeed;
 		Phaser.Actions.IncX(this.obsticles.getChildren(), -this.gameSpeed);
 		Phaser.Actions.IncX(this.donuts.getChildren(), -this.gameSpeed);
-		Phaser.Actions.IncX(this.environment.getChildren(), -0.5);
+		Phaser.Actions.IncX(this.environment.getChildren(), -2);
 		if(this.type === 0){
 			Phaser.Actions.IncY([this.sun], 1);
 			Phaser.Actions.IncX([this.memo], -1);
 		}
 		else if(this.type === 1){
 			Phaser.Actions.IncY([this.sunset], 1);
+			Phaser.Actions.IncX([this.wheel], -1);
 		}
 		else if(this.type === 2){
 			Phaser.Actions.IncY([this.moon], 1);
@@ -703,8 +717,13 @@
 		this.environment.getChildren().forEach(env => {
 		  if (env.getBounds().right < 0) {
 			env.x = this.game.config.width + 30;
+			env.y = this.cloudHeight(320);
 		  }
 		});
+
+		if(this.moon.getBounds().top > 480){
+			this.moon.y = -360;
+		}
 
 		if (this.dino.body.y < 500) {
 			if(this.jump){
@@ -722,7 +741,9 @@
 			}
 		}
 
-		this.passTime(Math.floor(time / 3000) % 3);
+		if(Math.floor(time / 3000) < 3){
+			this.passTime(Math.floor(time / 3000));
+		}
 	  }
 	}
 
