@@ -1,0 +1,281 @@
+.head {
+    background: var(--point-color);
+    color: #fff;
+    height: 90px;
+    text-align: center;
+    line-height: 90px;
+    margin: -8px -8px 0 -8px;
+}
+.content {
+    max-width: 1200px;
+    width: 100%;
+    align-self: center;
+    position: relative;
+}
+.content.scroll .content-header {
+    top: -194px;
+}
+.content.show .content-header {
+    position: fixed;
+    top: 0;
+    max-width: 1200px;
+    left: 50%;
+    right: -50%;
+    transform: translate(-50%, 0);
+    padding: 0 8px;
+}
+.content.scroll .tag-anchor, .content.show .tag-anchor {
+    display: block;
+    position: fixed;
+    height: 30px;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    text-align: center;
+    text-indent: 0;
+}
+.content.show .tag-anchor {
+    top: 194px;
+}
+.content-header {
+    position: absolute;
+    right: 0;
+    left: 0;
+    z-index: 9;
+    background: #fff;
+}
+.tag-anchor {
+    position: absolute;
+    top: -50;
+    transition: top .3s;
+    text-indent: -9999999999;
+}
+.tag-anchor div {
+    height: 30px;
+    display: inline-block;
+    cursor: pointer;
+}
+.content-header .selected-container {
+    display: flex;
+    flex-direction: row;
+    padding: 8px;
+}
+.content-header .selected-container .selected-wrapper {
+    flex: 1;
+    overflow: auto;
+}
+.content-header .selected-container .selected-wrapper {
+    white-space: nowrap;
+}
+.content-header .selected-container .selected-wrapper ul:empty::before {
+    content: "모두 선택";
+    font-size: .8em;
+    line-height: 27px;
+    color: #a5a5a5;
+}
+.content-header .selection-container {
+    border-top: 1px solid #b5b5b5;
+}
+.content-header .selection-container .tag-container {
+    border-bottom: 1px solid #b5b5b5;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    max-height: 49px;
+}
+.content-header .selection-container .tag-container.open {
+    max-height: fit-content;
+}
+.content-header .selection-container .tag-container .tag-header {
+    font-weight: 600;
+    padding: 7px 7px;
+    position: relative;
+    width: 52px;
+    min-width: 52px;
+    line-height: 35px;
+}
+.content-header .selection-container .tag-container .tag-wrapper {
+    margin: 4px 7px;
+    flex: 1;
+    overflow: auto;
+}
+.content-header .selection-container .tag-container .tag-wrapper .tag-grid {
+    display: inline-block;
+    white-space: nowrap;
+    margin: 4px 0;
+}
+.content-header .selection-container .tag-container.open .tag-wrapper .tag-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(33%, auto));
+    white-space: inherit;
+}
+.tag-item {
+    display: inline-block;
+    height: 27px;
+    line-height: 27px;
+    margin-right: 4px;
+    border-radius: 14px;
+    padding: 0 8px;
+    color: #000;
+    font-size: 0.8em;
+    cursor: pointer;
+}
+.tag-grid .tag-item {
+    margin: 3px 4px 3px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.open .tag-grid .tag-item {
+    width: calc(100% - 20px);
+}
+.content-tag {
+    background: var(--w-color);
+    color: #fff;
+}
+.interval-tag {
+    background: var(--e-color);
+    color: #fff;
+}
+.character-tag {
+    background: var(--r-color);
+    color: #fff;
+}
+
+.content-body {
+    padding: 20px 8px;
+    margin-top: 194px;
+    transition: 0.7s;
+}
+.content-container .order {
+    background: var(--point-color);
+    border-radius: 4px;
+    color: #fff;
+    border: 1px solid transparent;
+    padding: 6px;
+    cursor: pointer;
+}
+.content-container ul {
+    display: grid;
+    grid-template-columns: repeat(var(--video-grid-columns), 1fr);
+    gap: 10px;
+}
+.content-container ul li {
+    position: relative;
+}
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: clip;
+    position: relative;
+    height: 100%;
+}
+.content-wrapper .content-desc {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 8px;
+    flex: 1;
+}
+.content-wrapper .content-desc .title-container {
+    display: flex;
+    flex: 1;
+}
+.content-wrapper .content-desc .title {
+    flex: 1;
+}
+.content-wrapper .content-desc .title-container .more {
+    display: flex;
+    justify-content: flex-end;
+    align-items: baseline;
+    position: relative;
+    overflow: hidden;
+    padding: 0 4px;
+    margin-left: 13px;
+    cursor: pointer;
+}
+.content-wrapper .content-desc .title-container .dot {
+    position: relative;
+    width: 3px;
+    height: 3px;
+    border-radius: 3px;
+    background-color: #3f3f3f;
+    color: #3f3f3f;
+    top: 9px;
+}
+.content-wrapper .content-desc .title-container .dot::before {
+    content: "";
+    width: 3px;
+    height: 3px;
+    border-radius: 3px;
+    background-color: #3f3f3f;
+    color: #3f3f3f;
+    display: inline-block;
+    position: absolute;
+    top: -7px;
+}
+.content-wrapper .content-desc .title-container .dot::after {
+    content: "";
+    width: 3px;
+    height: 3px;
+    border-radius: 3px;
+    background-color: #3f3f3f;
+    color: #3f3f3f;
+    display: inline-block;
+    position: absolute;
+    top: 7px;
+}
+.content-wrapper .content-desc .publishAt {
+    text-align: right;
+    color: #737373;
+    font-size: 0.85em;
+}
+.content-wrapper .content-desc .tags {
+    font-size: .8em;
+}
+.content-wrapper .content-thumbnail {
+    aspect-ratio: 16 / 9;
+    background-size: contain;
+    border-radius: 7px;
+}
+.content-wrapper .content-thumbnail a {
+    width: 100%;
+    height: 100%;
+}
+.content-container ul li .content-detail {
+    display: none;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    left: -5px;
+    bottom: -5px;
+    padding: 8px 0 8px 8px;
+    border-top: 1px solid #e5e5e5;
+    z-index: 99;
+    word-break: break-word;
+    font-size: .8em;
+    line-height: 1.4em;
+    box-shadow: 0 0 9px #000;
+    border-radius: 7px;
+    background: #ffffffed;
+}
+.content-wrapper .content-detail::after {
+    content: "〈";
+    transform: rotate(-90deg);
+    position: absolute;
+    right: 18px;
+}
+.content-container ul li span {
+    background: var(--point-color);
+    color: #fff;
+    font-size: .8em;
+    padding: 3px;
+    border-radius: 3px;
+    margin-right: 5px;
+}
+.content-container ul li.detail .content-detail {
+    display: inline-block;
+}

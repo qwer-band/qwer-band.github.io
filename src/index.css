@@ -1,0 +1,52 @@
+@font-face {
+  font-family: 'KCC-Hanbit';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2403-2@1.0/KCC-Hanbit.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+:root {
+  --q-color: #fff;
+  --w-color: #ef87b5;
+  --e-color: #06bded;
+  --r-color: #c3d773;
+  --point-color: #9f5752;
+}
+:root {
+  --video-grid-columns: 2;
+}
+@media screen and (min-width: 727px) {
+  :root {
+      --video-grid-columns: 3;
+  }
+}
+@media screen and (min-width: 1051px) {
+  :root {
+      --video-grid-columns: 4;
+  }
+}
+* {
+  font-family: 'KCC-Hanbit';
+  font-size: 1em;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+li {
+  display: inline-block;
+}
+a {
+  text-decoration: none;
+  display: inline-block;
+  background: transparent;
+  
+}
+.gap-top {
+  margin-top: 10px;
+}
