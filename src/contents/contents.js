@@ -134,7 +134,7 @@ function Contents(){
             else{
                 setSelectedContents(props.db.rows);
             }
-        }, [selectedTags]);
+        }, [selectedTags, props.contents, props.intervals, props.characters, props.db.rows]);
 
         //선택된 콘텐츠 목록, 페이지 변경
         useEffect(() => {
@@ -177,9 +177,7 @@ function Contents(){
         useEffect(() => {
             const handleObserver = (entries => {
                 entries.forEach((entry) => {
-                    const scrolled = document.querySelector(".content").classList.contains("scroll");
-                    
-                    if (entry.isIntersecting) {
+                   if (entry.isIntersecting) {
                         document.querySelector(".content").classList.remove("scroll");
                     }
                     else{
@@ -200,8 +198,6 @@ function Contents(){
         useEffect(() => {
             const handleObserver = (entries => {
                 entries.forEach((entry) => {
-                    const scrolled = document.querySelector(".content").classList.contains("show");
-                    
                     if (entry.isIntersecting) {
                         document.querySelector(".content").classList.remove("show");
                     }
@@ -255,7 +251,7 @@ function Contents(){
                             document.querySelector(".content").classList.add("show");
                         }
                     }}>
-                        <img src={topImages[Math.floor(Math.random() * 4)]} height="50" />
+                        <img src={topImages[Math.floor(Math.random() * 4)]} height="50" alt="검색창 열기" />
                     </div>
                 </div>
                 <div className="content-body">
@@ -275,7 +271,7 @@ function Contents(){
                                             <li key={element["아이디"]}>
                                                 <div className="content-wrapper">
                                                     <div className="content-thumbnail" style={{background: `url(${"https://i.ytimg.com/vi/" + element["아이디"] + "/mqdefault.jpg"}) no-repeat center / contain`}}> 
-                                                        <a href={"https://www.youtube.com/watch?v=" + element["아이디"]} target='_blank' rel="noreferrer noopener"></a>
+                                                        <a href={"https://www.youtube.com/watch?v=" + element["아이디"]} target='_blank' rel="noreferrer noopener">{null}</a>
                                                     </div>
                                                     <div className="content-desc">
                                                         <div className="title-container">
@@ -323,7 +319,6 @@ function Contents(){
     const [characters, setCharacters] = useState(null);
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [page, setPage] = useState(1);
     const [loadingImg, setLoadingImg] = useState(null);
     const [intervalId, setIntervalId] = useState(null);
 
@@ -411,7 +406,7 @@ function Contents(){
     else if(!isLoaded){
         return (
             <div style={{display: "flex", justifyContent: "center", height: "calc(100vh - 100px)"}}>
-                <img src={loadingImg} height="150" style={{alignSelf: "center"}}/>
+                <img src={loadingImg} height="150" style={{alignSelf: "center"}} alt="로딩중" />
             </div>
         );
     }
