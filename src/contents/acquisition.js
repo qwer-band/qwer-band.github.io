@@ -2,14 +2,15 @@ import jsonata from 'jsonata';
 import React, {useState, useEffect} from 'react';
 
 function Acquisition(){
-    const API_KEY = "AIzaSyDblLjTx67PzOyjagi7kimhNGNEilKP6Eo";
-    const PLAY_LIST_ID = "PLphVgbzLGFUT1krVX-1gqeXRmq5OSPt1D";
-    const SHEET_ID = '1sivmuybNofhpBLm8PvX8aTm28MlYCQjCZwJBzLOsJtc';
+    const API_KEY = process.env.REACT_APP_API_KEY;
+    const PLAY_LIST_ID = process.env.REACT_APP_PLAY_LIST_ID;
+    const SHEET_ID = process.env.REACT_APP_SHEET_ID;
+    const MACRO_ID = process.env.REACT_APP_MACRO_ID;
     //const channelIds = ['UCgD0APk2x9uBlLM0UsmhQjw', 'UC1zjIMlGc1mkfGdzLAn7Zpw', 'UCdtRAcd3L_UpV4tMXCw63NQ']
     const playListURL = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&status=&playlistId=${PLAY_LIST_ID}&key=${API_KEY}`;
     const spreadsheetsURL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?`;
     const videoURL = `https://www.googleapis.com/youtube/v3/videos?part=snippet&key=${API_KEY}`;
-    const appsScriptUrl = "https://script.google.com/macros/s/AKfycbxBcwtZ9mzVIchPfWWO5ZpCX2VeBHkBZLsmuWIabZz7CiVMtU7ryJRNzkyDxuH-Jcnf/exec";
+    const appsScriptUrl = `https://script.google.com/macros/s/${MACRO_ID}/exec`;
     const [youtubeList, setYoutubeList] = useState([]);
     const [db, setDB] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -126,7 +127,28 @@ function Acquisition(){
                 
                 console.log(youtube);
             });*/
-            youtubeList.map(async element => {
+            /*setYoutubeList([
+                ...Promise.all([...youtubeList.map(async element => {
+                                    const data = await jsonata(`$[아이디='${element.snippet.resourceId.videoId}']`).evaluate(db);
+                                    
+                                    if(data){
+                                        element.isExists = true;
+                                    }
+                                    else{
+                                        list.push(element);
+                                        setUpdateList([...list]);
+                                    }
+                    
+                                    return element;
+                                })
+                            ])
+                            .then(results => {
+                                console.log(results);
+                                return results;
+                            })
+                                //.sort((a, b) => a.isExists ? -1 : 1)
+            ])*/
+            Promise.all([...youtubeList.map(async element => {
                 const data = await jsonata(`$[아이디='${element.snippet.resourceId.videoId}']`).evaluate(db);
                 
                 if(data){
@@ -136,9 +158,14 @@ function Acquisition(){
                     list.push(element);
                     setUpdateList([...list]);
                 }
-            });
 
-            setYoutubeList([...youtubeList]);
+                return element;
+            })])
+            .then(results => {
+                results.sort((a, b) => a.isExists ? 1 : -1);
+
+                setYoutubeList([...results]);
+            });
         }
     }, [youtubeList, db, isStop]);
 
@@ -160,10 +187,10 @@ function Acquisition(){
             <ul>
                 {youtubeList.map((element, index) => {
                     return (
-                        <li key={element.id} style={{display: "block"}}>
+                        <li key={element.id} style={{display: "flex"}}>
                             <span style={{width: "50px", display: "inline-block"}}>{index + 1}</span>
                             <span style={{width: "50px", display: "inline-block"}}>{element.updateComplete ? "완료" : (element.isExists ? "O" : "X")}</span>
-                            <span style={{display: "inline-block"}}>{element.snippet.title}</span>
+                            <span style={{flex: "1"}}>{element.snippet.title}</span>
                         </li>
                     )
                 })}

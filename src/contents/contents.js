@@ -323,8 +323,8 @@ function Contents(){
     const [intervalId, setIntervalId] = useState(null);
 
     async function initDB(){
-        const sheetId = '1sivmuybNofhpBLm8PvX8aTm28MlYCQjCZwJBzLOsJtc';
-        const base = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?`;
+        const SHEET_ID = process.env.REACT_APP_SHEET_ID;
+        const base = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?`;
         const sheetName = '시트1';
         const query = encodeURIComponent('Select *');
         const url = `${base}&sheet=${sheetName}&tq=${query}`;
